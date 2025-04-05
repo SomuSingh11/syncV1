@@ -12,17 +12,9 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import {
-<<<<<<< HEAD
- 
   Calculator,
   Calendar,
   CreditCard,
-  
-=======
-  Calculator,
-  Calendar,
-  CreditCard,
->>>>>>> 526e8505a1a025e2bb239af74f6734bc509c1ddf
   MessageSquareMore,
   Search,
   Settings,
