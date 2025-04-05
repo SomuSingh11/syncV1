@@ -76,7 +76,7 @@ export function ProjectTimelineComponent({ departmentId }: ProjectTimelineProps)
   } satisfies ChartConfig;
 
   return (
-    <Card className="w-96">
+    <Card className="w-1/3">
       <CardHeader>
         <CardTitle>Projects Timeline</CardTitle>
         <CardDescription>Project distribution for {new Date().getFullYear()}</CardDescription>

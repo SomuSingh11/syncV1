@@ -1,4 +1,4 @@
-"use client";
+'"use client";
 import { ProjectAnalysis } from "@/components/ai/ProjectAnalysis";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";

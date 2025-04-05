@@ -289,13 +289,15 @@ export default function DashboardPage() {
         </div>
       </div>
       <div>
-        <div className="flex mt-5 gap-8 p-3">
+        <div className="flex mt-7 gap-8">
           <ProjectConflictGraph />
-          <ResourcesAndProjectsGraph />
+          <RadialGlobalChart />
+          <ProjectTimelineComponent departmentId={departmentId ?? ''} />
+          {/* <ResourcesAndProjectsGraph /> */}
         </div>
         <div className="mt-6 flex">
-          <ProjectTimelineComponent departmentId={departmentId ?? ''} />
-          <RadialGlobalChart />
+          
+          
         </div>
       </div>
 

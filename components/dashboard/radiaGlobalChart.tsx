@@ -80,12 +80,12 @@ export function RadialGlobalChart() {
   const growthRate = 8.7
 
   return (
-    <Card className="flex flex-col shadow-lg border-blue-100 bg-gradient-to-br from-white to-blue-50 w-1/5 mx-auto">
+    <Card className="flex flex-col w-1/3 shadow-lg border-blue-100 bg-gradient-to-br from-white to-blue-50 mx-auto">
       <CardHeader className="items-center pb-0 border-b border-blue-100">
         <CardTitle className="text-blue-800 text-xl">Sync City Ecosystem</CardTitle>
         <CardDescription className="text-blue-600">Global Collaboration Metrics</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0 pt-6">
+      <CardContent className="flex-1 pb-6 pt-6">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[300px]"
@@ -117,14 +117,6 @@ export function RadialGlobalChart() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm border-t border-blue-100 mt-4 pt-4 pb-4">
-        <div className="flex items-center gap-2 font-medium leading-none text-blue-700">
-          Collaborative growth {growthRate}% MoM <TrendingUp className="h-4 w-4 text-blue-600" />
-        </div>
-        <div className="leading-none text-blue-500">
-          {totalItems} coordinated resources across all departments
-        </div>
-      </CardFooter>
     </Card>
   )
 }

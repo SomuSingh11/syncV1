@@ -102,18 +102,49 @@ export const getResources = query({
   },
 });
 
-function generatePrompt(project: any, resources: any) {
+function generatePrompt(project: Project, resources: Resource[]) {
   return `
-    Analyze this project and its resource utilization:
-    Project Details: ${JSON.stringify(project)}
-    Available Resources: ${JSON.stringify(resources)}
-    
-    Please provide:
-    1. Resource conflicts and risks
-    2. Timeline impact analysis
-    3. Budget utilization assessment
-    4. Resource optimization recommendations
-    5. Overall risk score (0-100)
+    As an AI project analyzer, analyze this project and its resource utilization. Provide a detailed, structured response.
+
+    Project Details:
+    - Name: ${project.name}
+    - Description: ${project.description}
+    - Timeline: ${new Date(project.startDate).toLocaleDateString()} to ${new Date(project.endDate).toLocaleDateString()}
+    - Budget: $${project.budget}
+    - Priority: ${project.priority}
+    - Status: ${project.status}
+
+    Available Resources:
+    ${resources.map((r) => `- ${r.name} (${r.allocatedQuantity}/${r.totalQuantity} allocated)`).join("\n")}
+
+    Please provide your analysis in the following structured format:
+
+    1. RESOURCE CONFLICTS AND RISKS
+    - List specific resource conflicts
+    - Identify potential bottlenecks
+    - Resource availability risks
+
+    2. TIMELINE ANALYSIS
+    - Project duration assessment
+    - Critical path impacts
+    - Schedule risk level (Low/Medium/High)
+
+    3. BUDGET ASSESSMENT
+    - Current resource cost: ${resources.reduce((sum, r) => sum + (r.price || 0) * r.allocatedQuantity, 0)}
+    - Budget utilization percentage
+    - Cost optimization opportunities
+
+    4. RESOURCE OPTIMIZATION
+    - Specific recommendations for resource allocation
+    - Alternative resource strategies
+    - Efficiency improvements
+
+    5. RISK ASSESSMENT
+    - Overall risk score (0-100)
+    - Risk breakdown by category
+    - Mitigation recommendations
+
+    Please be specific and quantitative where possible, and provide actionable recommendations.
   `;
 }
 

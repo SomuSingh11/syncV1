@@ -67,7 +67,7 @@ export function ProjectConflictGraph() {
     ((currentMonthConflicts - lastMonthConflicts) / lastMonthConflicts) * 100 : 0;
 
   return (
-    <Card className="w-150 ">
+    <Card className="w-1/3">
       <CardHeader>
         <CardTitle>Project Conflicts</CardTitle>
         <CardDescription>Monthly conflict distribution</CardDescription>
