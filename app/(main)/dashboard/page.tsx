@@ -1,21 +1,24 @@
 "use client";
 import { useState } from "react";
-// import { Bell, MessageSquare, Settings } from "lucide-react";
-import { Bell , MessageSquare , Settings} from "lucide-react";
+;
 
-// import ResourceForm from "@/components/dashboard/ResourceFrom";
-// import { SingleDoughnut } from "@/components/dashboard/SingleDoughnut";
-import { Router } from "next/router";
+import { useContext } from "react";
+import { DepartmentContext } from "../layout";
 import MyResourcesDialog from "@/components/dashboard/MyResourcesDialog";
 import { SectionCard } from "@/components/dashboard/SectionCard";
 import { StatCard } from "@/components/dashboard/StatCard";
 import ResourceForm from "@/components/dashboard/ResourceForm";
 import { SingleDoughnut } from "@/components/dashboard/SingleDoughnut";
+import { RadialGlobalChart } from "@/components/dashboard/radiaGlobalChart";
+import { ResourcesAndProjectsGraph } from "@/components/dashboard/ResourcesAndProjectsGraph";
+import { ProjectConflictGraph } from "@/components/dashboard/projectConflictGraph";
+import { ProjectTimelineComponent } from "@/components/dashboard/projectTimelineGraph";
 // import { DoughnutChart } from '@/components/ui/doughnut-chart';
 
 export default function DashboardPage() {
   const [isResourceFormOpen, setIsResourceFormOpen] = useState(false);
   const [isMyResourcesOpen, setIsMyResourcesOpen] = useState(false);
+  const { departmentId } = useContext(DepartmentContext);
   return (
     <div className="p-6">
       {/* Stats Grid */}
@@ -238,7 +241,7 @@ export default function DashboardPage() {
           onClose={() => setIsResourceFormOpen(false)}
         />
         <MyResourcesDialog
-        
+
           isOpen={isMyResourcesOpen}
           onClose={() => setIsMyResourcesOpen(false)}
         />
@@ -255,19 +258,19 @@ export default function DashboardPage() {
               percentage={81}
               label="Collaborating Departments"
               color="#ef4444"
-              size={120}
+              size={160}
             />
             <SingleDoughnut
               percentage={21}
               label="Resources Shared"
               color="#22c55e"
-              size={120}
+              size={160}
             />
             <SingleDoughnut
               percentage={20}
               label="Conflicting Projects"
               color="#93c5fd"
-              size={120}
+              size={160}
             />
           </div>
         </div>
@@ -285,6 +288,18 @@ export default function DashboardPage() {
           <div className="h-64 bg-blue-50 rounded-lg"></div>
         </div>
       </div>
+      <div>
+        <div className="flex mt-5 gap-8 p-3">
+          <ProjectConflictGraph />
+          <ResourcesAndProjectsGraph />
+        </div>
+        <div className="mt-6 flex">
+          <ProjectTimelineComponent departmentId={departmentId ?? ''} />
+          <RadialGlobalChart />
+        </div>
+      </div>
+
+
     </div>
   );
 }

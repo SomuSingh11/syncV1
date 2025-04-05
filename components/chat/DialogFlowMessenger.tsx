@@ -30,7 +30,7 @@ const DialogFlowMessenger = () => {
         --df-messenger-chat-background: #f3f6fc;
         --df-messenger-message-user-background: #d3e3fd;
         --df-messenger-message-bot-background: #fff;
-        top:526px;
+        top:626px;
         right:16px;
       }
     `;

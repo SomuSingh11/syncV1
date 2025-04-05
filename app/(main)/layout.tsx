@@ -10,7 +10,7 @@ import Navigation from "@/components/dashboard/navigation";
 
 // Create a context to share department data
 import { createContext } from "react";
-import { Dialog } from "@radix-ui/react-dialog";
+
 import DialogFlowMessenger from "@/components/chat/DialogFlowMessenger";
 import DepartmentRegistrationForm from "@/components/DepartmentRegistrationForm";
 
