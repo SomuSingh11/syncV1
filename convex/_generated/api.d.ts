@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as ai from "../ai.js";
 import type * as chat from "../chat.js";
 import type * as departments from "../departments.js";
 import type * as http from "../http.js";
@@ -22,6 +23,7 @@ import type * as projects from "../projects.js";
 import type * as resourceAllocation from "../resourceAllocation.js";
 import type * as resourceRequests from "../resourceRequests.js";
 import type * as resources from "../resources.js";
+import type * as testData from "../testData.js";
 import type * as users from "../users.js";
 
 /**
@@ -33,6 +35,7 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  ai: typeof ai;
   chat: typeof chat;
   departments: typeof departments;
   http: typeof http;
@@ -42,6 +45,7 @@ declare const fullApi: ApiFromModules<{
   resourceAllocation: typeof resourceAllocation;
   resourceRequests: typeof resourceRequests;
   resources: typeof resources;
+  testData: typeof testData;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

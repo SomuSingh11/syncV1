@@ -225,4 +225,63 @@ export default defineSchema({
   })
     .index("by_conversation", ["conversationId"])
     .index("by_timestamp", ["timestamp"]),
+
+  // ai realted schemass
+
+  // ... existing imports and schema start ...
+
+  // Add new AI-related tables
+  aiAnalysis: defineTable({
+    projectId: v.id("projects"),
+    departmentId: v.id("departments"),
+    analysisType: v.string(), // "resource_conflict", "spatial_conflict", "timeline_conflict"
+    severity: v.string(), // "low", "medium", "high"
+    conflicts: v.array(
+      v.object({
+        type: v.string(),
+        description: v.string(),
+        affectedResources: v.optional(v.array(v.string())),
+        impact: v.object({
+          schedule: v.string(),
+          cost: v.number(),
+          risk: v.string(),
+        }),
+        recommendations: v.array(v.string()),
+      })
+    ),
+    metrics: v.object({
+      riskScore: v.number(),
+      resourceUtilization: v.number(),
+      budgetImpact: v.number(),
+      scheduleDeviation: v.number(),
+    }),
+    status: v.string(), // "pending", "analyzed", "resolved"
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_projectId", ["projectId"])
+    .index("by_departmentId", ["departmentId"])
+    .index("by_status", ["status"]),
+
+  aiRecommendations: defineTable({
+    analysisId: v.id("aiAnalysis"),
+    projectId: v.id("projects"),
+    recommendationType: v.string(), // "resource_optimization", "schedule_adjustment", "conflict_resolution"
+    description: v.string(),
+    priority: v.string(), // "low", "medium", "high"
+    status: v.string(), // "pending", "implemented", "rejected"
+    impact: v.object({
+      cost: v.number(),
+      timeline: v.string(),
+      resources: v.array(v.string()),
+    }),
+    implementationSteps: v.array(v.string()),
+    createdAt: v.number(),
+    implementedAt: v.optional(v.number()),
+  })
+    .index("by_analysisId", ["analysisId"])
+    .index("by_projectId", ["projectId"])
+    .index("by_status", ["status"]),
+
+  // ... rest of your existing schema
 });
