@@ -17,6 +17,7 @@ import type * as chat from "../chat.js";
 import type * as departments from "../departments.js";
 import type * as http from "../http.js";
 import type * as projectConflictChat from "../projectConflictChat.js";
+import type * as projectConflicts from "../projectConflicts.js";
 import type * as projects from "../projects.js";
 import type * as resourceAllocation from "../resourceAllocation.js";
 import type * as resourceRequests from "../resourceRequests.js";
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   departments: typeof departments;
   http: typeof http;
   projectConflictChat: typeof projectConflictChat;
+  projectConflicts: typeof projectConflicts;
   projects: typeof projects;
   resourceAllocation: typeof resourceAllocation;
   resourceRequests: typeof resourceRequests;
