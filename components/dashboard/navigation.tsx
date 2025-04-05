@@ -12,11 +12,11 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import {
-  Bell,
+ 
   Calculator,
   Calendar,
   CreditCard,
-  MessageSquare,
+  
   MessageSquareMore,
   Search,
   Settings,
@@ -44,7 +44,7 @@ interface NavigationProps {
 }
 
 function Navigation({ userData, departmentId }: NavigationProps) {
-  const router = useRouter();
+//   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);

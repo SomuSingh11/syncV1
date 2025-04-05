@@ -189,3 +189,63 @@ export const getProjectConflictDepartments = query({
       .collect();
   },
 });
+
+export const update = mutation({
+  args: {
+    id: v.id("departments"),
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+    description: v.optional(v.string()),
+    departmentType: v.optional(v.string()),
+    location: v.optional(
+      v.object({
+        city: v.string(),
+        state: v.string(),
+        zip: v.string(),
+      })
+    ),
+  },
+  handler: async (ctx, args) => {
+    // Get the current user's ID
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    // Get the department
+    const department = await ctx.db.get(args.id);
+    if (!department) {
+      throw new Error("Department not found");
+    }
+
+    // Check if the current user is the point of contact
+    if (department.pointOfContact !== identity.subject) {
+      throw new Error("Only the point of contact can update the department");
+    }
+
+    // Update the department with provided fields
+    const updates: Partial<{
+      name: string;
+      email: string;
+      description: string;
+      departmentType: string;
+      location: {
+        city: string;
+        state: string;
+        zip: string;
+      };
+      updatedAt: number;
+    }> = {};
+    if (args.name) updates.name = args.name;
+    if (args.email) updates.email = args.email;
+    if (args.description) updates.description = args.description;
+    if (args.departmentType) updates.departmentType = args.departmentType;
+    if (args.location) updates.location = args.location;
+    updates.updatedAt = Date.now();
+
+    // Apply the updates
+    await ctx.db.patch(args.id, updates);
+
+    return await ctx.db.get(args.id);
+  },
+});

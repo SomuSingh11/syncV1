@@ -195,3 +195,41 @@ export const getAllExceptOwn = query({
     return resources;
   },
 });
+
+export const getCollaborations = query({
+  args: {
+    departmentId: v.id("departments"),
+  },
+  handler: async (ctx, args) => {
+    // Get all conversations where this department is involved
+    const conversations = await ctx.db
+      .query("conversations")
+      .filter((q) =>
+        q.or(
+          q.eq(q.field("initiatorDepartmentId"), args.departmentId),
+          q.eq(q.field("recipientDepartmentId"), args.departmentId)
+        )
+      )
+      .filter((q) => q.eq(q.field("status"), "active"))
+      .collect();
+
+    // Get unique department IDs from conversations
+    const collaboratingDepartmentIds = new Set(
+      conversations
+        .flatMap((conv) => [
+          conv.initiatorDepartmentId,
+          conv.recipientDepartmentId,
+        ])
+        .filter((id) => id !== args.departmentId)
+    );
+
+    // Get department details for collaborating departments
+    const collaboratingDepartments = await Promise.all(
+      Array.from(collaboratingDepartmentIds).map(async (deptId) => {
+        return await ctx.db.get(deptId);
+      })
+    );
+
+    return collaboratingDepartments.filter(Boolean);
+  },
+});
