@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { toast } from 'react-hot-toast';
+import { motion } from "framer-motion";
 
 export default function LandingPage() {
     const router = useRouter();
@@ -35,7 +36,9 @@ export default function LandingPage() {
             <div className="relative">
               <h1 className="text-9xl mx-20 font-serif">Sync</h1>
               <h1 className="text-9xl mx-40 italic -mt-10">City</h1>
-              <div className="mt-1 mx-14 text-lg">Collaborate, Support, Integrate</div>
+              <div className="mt-1 mx-14 text-lg">
+                Collaborate, Support, Integrate
+              </div>
             </div>
           </div>
 
@@ -43,18 +46,35 @@ export default function LandingPage() {
             <div className="text-4xl font-medium relative p-8">
               <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-black"></div>
               <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-black"></div>
-              <span className="text-4xl mx-16 font-serif tracking-wider">&ldquo;Collaborative Web </span>{' '}
-              <br /> <span className="font-serif tracking-wider">Solutions: Where Expertise</span>{' '}
-              <br /> <span className="mx-16 font-serif tracking-wider"> Meets Innovation&rdquo;</span>
+              <span className="text-4xl mx-16 font-serif tracking-wider">
+                &ldquo;Collaborative Web{" "}
+              </span>{" "}
+              <br />{" "}
+              <span className="font-serif tracking-wider">
+                Solutions: Where Expertise
+              </span>{" "}
+              <br />{" "}
+              <span className="mx-16 font-serif tracking-wider">
+                {" "}
+                Meets Innovation&rdquo;
+              </span>
             </div>
             <div className="flex mx-48">
-              <button
+              <motion.button
                 onClick={handleGetStarted}
+                whileHover={{ scale: 1.05, x: 10 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 hover:bg-green-600 hover:shadow-lg transition-all w-fit"
               >
                 Get Started
-                <ArrowRight size={24} />
-              </button>
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <ArrowRight size={24} />
+                </motion.div>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -63,9 +83,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl font-bold mb-6">About us</h2>
           <div className="bg-gray-50/30 border rounded-full text-xl leading-relaxed text-gray-700 max-w-10xl p-4">
-            &ldquo;Sync City is all about collaboration, resources, and projects that drive innovation and
-            efficiency. We bring together experts, tools, and ideas to create seamless digital
-            solutions that empower your vision and transform your online presence.&rdquo;
+            &ldquo;Sync City is all about collaboration, resources, and projects
+            that drive innovation and efficiency. We bring together experts,
+            tools, and ideas to create seamless digital solutions that empower
+            your vision and transform your online presence.&rdquo;
           </div>
         </div>
       </section>
