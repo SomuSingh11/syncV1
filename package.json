@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.13.0",
+    "@google/generative-ai": "^0.24.0",
     "@hookform/resolvers": "^5.0.1",
     "@livekit/components-react": "^2.9.0",
     "@livekit/components-styles": "^1.1.5",
@@ -25,6 +26,7 @@
     "@radix-ui/react-tabs": "^1.1.3",
     "@turf/turf": "^7.2.0",
     "add": "^2.0.6",
+    "autogen": "^0.0.1",
     "avatar": "^0.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -49,6 +51,7 @@
     "svix": "^1.63.1",
     "tailwind-merge": "^3.1.0",
     "tw-animate-css": "^1.2.5",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
