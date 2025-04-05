@@ -11,7 +11,7 @@ import {
   FileStack,
   Map,
   PackageSearch,
-  BotMessageSquare,
+ 
   UserCircle,
 } from 'lucide-react';
 
@@ -20,7 +20,6 @@ const sidebarItems = [
   { id: 'projects', name: 'Projects', icon: FileText },
   { id: 'resources', name: 'Resources', icon: PackageSearch },
   { id: 'logs', name: 'Logs', icon: BarChart3 },
-  { id: 'aiAssistance', name: 'AI-Assistance', icon: BotMessageSquare },
   { id: 'collaboration', name: 'Collaboration', icon: Users },
   { id: 'requests', name: 'Requests', icon: FileStack },
   { id: 'maps', name: 'Maps', icon: Map },
