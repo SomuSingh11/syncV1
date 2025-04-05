@@ -232,7 +232,7 @@ export default defineSchema({
 
   // Add new AI-related tables
   aiAnalysis: defineTable({
-    projectId: v.id("projects"),
+    projectId: v.id("testProjects"),
     departmentId: v.id("departments"),
     analysisType: v.string(), // "resource_conflict", "spatial_conflict", "timeline_conflict"
     severity: v.string(), // "low", "medium", "high"
@@ -263,25 +263,47 @@ export default defineSchema({
     .index("by_departmentId", ["departmentId"])
     .index("by_status", ["status"]),
 
-  aiRecommendations: defineTable({
-    analysisId: v.id("aiAnalysis"),
-    projectId: v.id("projects"),
-    recommendationType: v.string(), // "resource_optimization", "schedule_adjustment", "conflict_resolution"
-    description: v.string(),
-    priority: v.string(), // "low", "medium", "high"
-    status: v.string(), // "pending", "implemented", "rejected"
-    impact: v.object({
-      cost: v.number(),
-      timeline: v.string(),
-      resources: v.array(v.string()),
+  testProjects: defineTable({
+    departmentId: v.id("departments"),
+    name: v.string(),
+    description: v.optional(v.string()),
+    startDate: v.number(),
+    endDate: v.number(),
+    status: v.string(),
+    location: v.object({
+      type: v.string(),
+      coordinates: v.array(v.number()),
+      radius: v.optional(v.number()),
     }),
-    implementationSteps: v.array(v.string()),
+    budget: v.optional(v.number()),
+    priority: v.string(),
+    resourcesRequired: v.array(v.id("resources")),
+    
     createdAt: v.number(),
-    implementedAt: v.optional(v.number()),
-  })
-    .index("by_analysisId", ["analysisId"])
-    .index("by_projectId", ["projectId"])
-    .index("by_status", ["status"]),
+  }),
 
-  // ... rest of your existing schema
+  testResources: defineTable({
+    resourceId: v.string(),
+    departmentId: v.id("testDepartments"),
+    departmentName: v.string(),
+    name: v.string(),
+    type: v.string(),
+    totalQuantity: v.number(),
+    allocatedQuantity: v.number(),
+    status: v.string(),
+    isGlobal: v.boolean(),
+    description: v.optional(v.string()),
+    usageHistory: v.array(v.any()),
+    price: v.optional(v.number()),
+    location: v.optional(
+      v.object({
+        city: v.string(),
+        state: v.string(),
+        zip: v.string(),
+      })
+    ),
+    categories: v.array(v.string()),
+    tags: v.array(v.string()),
+    createdAt: v.number(),
+  }),
 });

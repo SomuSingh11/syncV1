@@ -2,6 +2,7 @@ import { query,mutation,action} from "./_generated/server";
 import { v } from "convex/values";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { api } from "./_generated/api";
+import { Id } from "./_generated/dataModel";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -20,7 +21,10 @@ interface Project {
   };
   budget?: number;
   priority: string;
-  resourcesRequired?: string[];
+  resourcesRequired: {
+    resourceId: Id<"resources">;
+    quantity: number;
+  }[];
   createdAt: number;
 }
 
@@ -39,54 +43,76 @@ interface Resource {
 }
 
 
-export const analyzeProject = action({
+export const analyzeTestProject = action({
   args: {
-    projectId: v.id("projects"),
+    projectId: v.id("testProjects"),
     departmentId: v.id("departments"),
+    resources: v.array(
+      v.object({
+        resourceId: v.string(),
+        name: v.string(),
+        type: v.string(),
+        available: v.number(),
+      })
+    ),
   },
   handler: async (ctx, args) => {
     const { projectId, departmentId } = args;
-     if (!process.env.GEMINI_API_KEY) {
-       throw new Error("GEMINI_API_KEY is not configured");
-     }
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY is not configured");
+    }
 
-
-     try{
-   const project = (await ctx.runQuery(api.ai.getProject, {
-        projectId,
-      })) as Project;
+    try {
+      const project = (await ctx.runQuery(api.testProjects.getById, {
+        id: projectId,
+      })) as {
+        _id: string;
+        departmentId: string;
+        name: string;
+        description?: string;
+        startDate: number;
+        endDate: number;
+        status: string;
+        location: {
+          type: string;
+          coordinates: number[];
+          radius?: number;
+        };
+        budget?: number;
+        priority: string;
+        resourcesRequired: Id<"resources">[];
+        createdAt: number;
+      };
       const resources = (await ctx.runQuery(api.ai.getResources, {
         departmentId,
       })) as Resource[];
 
-    // Generate AI analysis
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(
-      generatePrompt(project, resources)
-    );
+      // Generate AI analysis
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const result = await model.generateContent(
+        generatePrompt(project, resources)
+      );
 
-    return {
-      analysisResult: result.response.text(),
-      project,
-      resources,
-    };
-     }
-catch(error){
-    console.error("AI Analysis error:", error);
-    throw new Error(
-      "Failed to generate AI analysis. Please check API configuration."
-    );
-}
+      return {
+        analysisResult: result.response.text(),
+        project,
+        resources,
+      };
+    } catch (error) {
+      console.error("AI Analysis error:", error);
+      throw new Error(
+        "Failed to generate AI analysis. Please check API configuration."
+      );
+    }
     // Get project and resources data
-   
   },
 });
 
-export const getProject = query({
-  args: { projectId: v.id("projects") },
+export const getTestProject = query({
+  args: { projectId: v.id("testProjects") },
   handler: async (ctx, args) => {
     return await ctx.db
-      .query("projects")
+      .query("testProjects")
       .filter((q) => q.eq(q.field("_id"), args.projectId))
       .first();
   },
@@ -102,7 +128,24 @@ export const getResources = query({
   },
 });
 
-function generatePrompt(project: Project, resources: Resource[]) {
+function generatePrompt(project: {
+  _id: string;
+  departmentId: string;
+  name: string;
+  description?: string;
+  startDate: number;
+  endDate: number;
+  status: string;
+  location: {
+    type: string;
+    coordinates: number[];
+    radius?: number;
+  };
+  budget?: number;
+  priority: string;
+  resourcesRequired: Id<"resources">[];
+  createdAt: number;
+}, resources: Resource[]) {
   return `
     As an AI project analyzer, analyze this project and its resource utilization. Provide a detailed, structured response.
 
@@ -209,9 +252,9 @@ function calculateMetrics(analysisResult: string) {
 }
 
 
-export const storeAnalysis = mutation({
+export const storeTestAnalysis = mutation({
   args: {
-    projectId: v.id("projects"),
+    projectId: v.id("testProjects"),
     departmentId: v.id("departments"),
     analysisResult: v.string(),
   },

@@ -249,3 +249,16 @@ export const update = mutation({
     return await ctx.db.get(args.id);
   },
 });
+
+export const getDepartmentByEmail = query({
+  args: { email: v.string() },
+  handler: async (ctx, args) => {
+    const department = await ctx.db
+      .query("departments")
+      .filter((q) => q.eq(q.field("email"), args.email))
+      .first();
+
+    console.log("Query result:", { email: args.email, department });
+    return department;
+  },
+});
