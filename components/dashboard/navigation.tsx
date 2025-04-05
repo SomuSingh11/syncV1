@@ -12,11 +12,9 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import {
-  Bell,
   Calculator,
   Calendar,
   CreditCard,
-  MessageSquare,
   MessageSquareMore,
   Search,
   Settings,
