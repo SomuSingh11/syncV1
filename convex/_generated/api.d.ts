@@ -24,6 +24,7 @@ import type * as resourceAllocation from "../resourceAllocation.js";
 import type * as resourceRequests from "../resourceRequests.js";
 import type * as resources from "../resources.js";
 import type * as testData from "../testData.js";
+import type * as testProjects from "../testProjects.js";
 import type * as users from "../users.js";
 
 /**
@@ -46,6 +47,7 @@ declare const fullApi: ApiFromModules<{
   resourceRequests: typeof resourceRequests;
   resources: typeof resources;
   testData: typeof testData;
+  testProjects: typeof testProjects;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
