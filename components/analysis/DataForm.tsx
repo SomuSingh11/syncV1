@@ -96,7 +96,7 @@ export function TestProjectForm() {
         createdAt: Date.now(),
       });
       setProjectId(result);
-      form.reset();
+      // form.reset();
     } catch (error) {
       console.error("Error creating test project:", error);
     }
@@ -349,14 +349,10 @@ export function TestProjectForm() {
                     control={form.control}
                     name="resourcesRequired"
                     render={({ field }) => {
-                      const selectedResource = field.value?.find(
-                        (r) => r.resourceId === resource._id
-                      );
-
                       return (
                         <FormItem className="flex items-center space-x-4 p-2">
                           <Checkbox
-                            checked={!!selectedResource}
+                            checked={field.value.includes(resource._id)}
                             onCheckedChange={(checked) =>
                               handleResourceChange(
                                 resource._id,
@@ -367,21 +363,6 @@ export function TestProjectForm() {
                           <label className="flex-grow">
                             {resource.name} ({resource.type})
                           </label>
-                          {selectedResource && (
-                            <Input
-                              type="number"
-                              min="1"
-                              max={resource.totalQuantity}
-                              value={selectedResource.quantity}
-                              onChange={(e) =>
-                                handleQuantityChange(
-                                  resource._id,
-                                  parseInt(e.target.value) || 1
-                                )
-                              }
-                              className="w-24"
-                            />
-                          )}
                         </FormItem>
                       );
                     }}
@@ -412,7 +393,7 @@ export function TestProjectForm() {
         ) : projectId ? (
           <div className="space-y-6">
             <div className="grid gap-4">
-              <div className="space-y-3">
+              {/* <div className="space-y-3">
                 <h3 className="font-semibold">Risk Analysis</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
@@ -444,7 +425,7 @@ export function TestProjectForm() {
                     <span className="text-sm w-12">30%</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <ProjectAnalysis
               projectId={projectId as Id<"testProjects">}

@@ -19,7 +19,7 @@ const sidebarItems = [
   { id: 'dashboard', name: 'Dashboard', icon: Home },
   { id: 'projects', name: 'Projects', icon: FileText },
   { id: 'resources', name: 'Resources', icon: PackageSearch },
-  { id: 'logs', name: 'Logs', icon: BarChart3 },
+  { id: 'analysis', name: 'Analysis', icon: BarChart3 },
   { id: 'collaboration', name: 'Collaboration', icon: Users },
   { id: 'requests', name: 'Requests', icon: FileStack },
   { id: 'maps', name: 'Maps', icon: Map },
